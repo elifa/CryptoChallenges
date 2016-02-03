@@ -1,6 +1,6 @@
-package se.omegapoint.matasano;
+package se.omegapoint.cryptochallenge;
 
-import se.omegapoint.matasano.utils.HexadecimalBuffer;
+import se.omegapoint.cryptochallenge.utils.HexadecimalBuffer;
 
 public class WarmupChallenge {
 

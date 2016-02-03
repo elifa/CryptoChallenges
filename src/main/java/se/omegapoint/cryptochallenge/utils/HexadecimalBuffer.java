@@ -1,6 +1,7 @@
-package se.omegapoint.matasano.utils;
+package se.omegapoint.cryptochallenge.utils;
 
 import org.apache.shiro.codec.Base64;
+import org.apache.shiro.codec.CodecSupport;
 import org.apache.shiro.codec.Hex;
 
 import java.util.Arrays;
@@ -8,6 +9,10 @@ import java.util.Arrays;
 public class HexadecimalBuffer {
 
     final byte[] bytes;
+
+    public HexadecimalBuffer(final byte singleByte) {
+        this.bytes = new byte[]{singleByte};
+    }
 
     public HexadecimalBuffer(final byte[] byteArray) {
         this.bytes = byteArray;
@@ -47,7 +52,7 @@ public class HexadecimalBuffer {
         if (this == otherObject) {
             return true;
         }
-        if (otherObject == null || getClass() != otherObject.getClass()) {
+        if (otherObject == null || getClass().isAssignableFrom(otherObject.getClass())) {
             return false;
         }
 
@@ -63,6 +68,6 @@ public class HexadecimalBuffer {
 
     @Override
     public String toString() {
-        return toHex();
+        return CodecSupport.toString(bytes);
     }
 }

@@ -1,10 +1,10 @@
-package se.omegapoint.matasano;
+package se.omegapoint.cryptochallenge;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
-import se.omegapoint.matasano.utils.HexadecimalBuffer;
+import se.omegapoint.cryptochallenge.utils.HexadecimalBuffer;
 
 import java.util.Arrays;
 import java.util.Collection;

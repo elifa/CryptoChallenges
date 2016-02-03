@@ -1,4 +1,4 @@
-package se.omegapoint.matasano.utils;
+package se.omegapoint.cryptochallenge.utils;
 
 public class HammingDistance {
 

@@ -1,4 +1,4 @@
-package se.omegapoint.matasano;
+package se.omegapoint.cryptochallenge;
 
 import io.vertx.core.Vertx;
 

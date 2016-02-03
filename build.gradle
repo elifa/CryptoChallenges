@@ -18,7 +18,7 @@ dependencies {
   compile "org.apache.shiro:shiro-core:1.2.4"
 }
 
-mainClassName = "se.omegapoint.matasano.HelloWorldEmbedded"
+mainClassName = "se.omegapoint.cryptochallenge.HelloWorldEmbedded"
 
 shadowJar {
   classifier = "fat"
