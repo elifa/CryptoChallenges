@@ -35,7 +35,7 @@ public class HammingDistance {
         public double and(final HexadecimalBuffer compareBuffer) {
             final double distance = super.and(compareBuffer);
             final int maxLength = Math.max(baseBuffer.length(), compareBuffer.length());
-
+            
             return distance / (double) maxLength;
         }
     }

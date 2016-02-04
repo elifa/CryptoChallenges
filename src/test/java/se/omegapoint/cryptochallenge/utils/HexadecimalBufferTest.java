@@ -2,6 +2,9 @@ package se.omegapoint.cryptochallenge.utils;
 
 import org.junit.Test;
 
+import java.util.List;
+
+import static java.util.Arrays.asList;
 import static org.junit.Assert.*;
 
 public class HexadecimalBufferTest {
@@ -34,5 +37,23 @@ public class HexadecimalBufferTest {
         final String base64String = buffer.toBase64();
 
         assertEquals("SSdtIGtpbGxpbmcgeW91ciBicmFpbiBsaWtlIGEgcG9pc29ub3VzIG11c2hyb29t", base64String);
+    }
+
+    @Test
+    public void testTranspose() throws Exception {
+        final HexadecimalBuffer buffer = new HexadecimalBuffer(new byte[]{
+                0x00, 0x01,
+                0x02, 0x03,
+                0x04, 0x05
+        });
+
+        final HexadecimalBuffer transposedBuffer = buffer.transpose(3);
+
+        assertEquals(buffer.bytes[0], transposedBuffer.bytes[0]);
+        assertEquals(buffer.bytes[3], transposedBuffer.bytes[1]);
+        assertEquals(buffer.bytes[1], transposedBuffer.bytes[2]);
+        assertEquals(buffer.bytes[4], transposedBuffer.bytes[3]);
+        assertEquals(buffer.bytes[2], transposedBuffer.bytes[4]);
+        assertEquals(buffer.bytes[5], transposedBuffer.bytes[5]);
     }
 }
