@@ -20,6 +20,10 @@ public class AdvancedEncryptionStandard {
         this.cipherService.setPaddingScheme(PaddingScheme.NONE);
     }
 
+    public int blockLength() {
+        return encryptionKey.length();
+    }
+
     public ByteBuffer encrypt(final ByteBuffer plainText, final ByteBuffer initializationVector) {
         final ByteBuffer paddedPlainText = pkcs7pad(plainText, blockLength());
         final int noOfChunks = paddedPlainText.noOfChunks(blockLength());
@@ -86,10 +90,6 @@ public class AdvancedEncryptionStandard {
         final ByteSource plainText = cipherService.decrypt(cipherText.bytes, encryptionKey.bytes);
 
         return new ByteBuffer(plainText.getBytes());
-    }
-
-    private int blockLength() {
-        return encryptionKey.length();
     }
 
 }
