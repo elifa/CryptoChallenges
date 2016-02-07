@@ -1,9 +1,11 @@
 package se.omegapoint.cryptochallenge.utils;
 
+import org.apache.commons.lang3.ArrayUtils;
 import org.apache.shiro.codec.Base64;
 import org.apache.shiro.codec.CodecSupport;
 import org.apache.shiro.codec.Hex;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -16,12 +18,22 @@ public class ByteBuffer {
         this.bytes = new byte[]{};
     }
 
+    public ByteBuffer(final int singleByte) {
+        this((byte) singleByte);
+    }
+
     public ByteBuffer(final byte singleByte) {
         this.bytes = new byte[]{singleByte};
     }
 
     public ByteBuffer(final byte[] byteArray) {
         this.bytes = byteArray;
+    }
+
+    public ByteBuffer pad(final int toLength, final ByteBuffer with) {
+        byte[] result = Arrays.copyOf(bytes, toLength);
+        Arrays.fill(result, length(), result.length, with.bytes[0]);
+        return new ByteBuffer(result);
     }
 
     public ByteBuffer xor(final ByteBuffer otherBuffer) {
@@ -39,6 +51,10 @@ public class ByteBuffer {
 
     public List<ByteBuffer> split(final int numberOfChunks) {
         return chunk(calculateChunkLength(numberOfChunks));
+    }
+
+    public ByteBuffer chunk(final int index, final int chuckSize) {
+        return new ByteBuffer(Arrays.copyOfRange(bytes, index * chuckSize, index * chuckSize + chuckSize));
     }
 
     public List<ByteBuffer> chunk(final int chuckSize) {
@@ -81,12 +97,26 @@ public class ByteBuffer {
         return bytes.length;
     }
 
+    public int noOfChunks(final int chunkSize) {
+        int result = length() / chunkSize;
+        result += length() % chunkSize == 0 ? 0 : 1;
+        return result;
+    }
+
     public String toHex() {
         return Hex.encodeToString(bytes);
     }
 
     public String toBase64() {
         return Base64.encodeToString(bytes);
+    }
+
+    public BigInteger toInt() {
+        byte[] rev = ArrayUtils.addAll(bytes, (byte) 0x00, (byte) 0x00);
+
+        ArrayUtils.reverse(rev);
+
+        return new BigInteger(rev);
     }
 
     private int calculateChunkLength(final int numberOfChunks) {
@@ -98,7 +128,7 @@ public class ByteBuffer {
         if (this == otherObject) {
             return true;
         }
-        if (otherObject == null || getClass().isAssignableFrom(otherObject.getClass())) {
+        if (otherObject == null || !otherObject.getClass().isAssignableFrom(getClass())) {
             return false;
         }
 
