@@ -2,10 +2,7 @@ package se.omegapoint.cryptochallenge.utils;
 
 import org.junit.Test;
 
-import java.util.List;
-
-import static java.util.Arrays.asList;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class HexadecimalBufferTest {
 
@@ -22,7 +19,7 @@ public class HexadecimalBufferTest {
     @Test
     public void verifyHexEncoding() throws Exception {
         final String hexadecimalString = "49276d206b696c6c696e6720796f757220627261696e206c696b65206120706f69736f6e6f7573206d757368726f6f6d";
-        final HexadecimalBuffer buffer = new HexadecimalBuffer(hexadecimalString);
+        final ByteBuffer buffer = new HexadecimalBuffer(hexadecimalString);
 
         final String generatedHexadecimalString = buffer.toHex();
 
@@ -32,7 +29,7 @@ public class HexadecimalBufferTest {
     @Test
     public void verifyBase64Encoding() throws Exception {
         final String hexadecimalString = "49276d206b696c6c696e6720796f757220627261696e206c696b65206120706f69736f6e6f7573206d757368726f6f6d";
-        final HexadecimalBuffer buffer = new HexadecimalBuffer(hexadecimalString);
+        final ByteBuffer buffer = new HexadecimalBuffer(hexadecimalString);
 
         final String base64String = buffer.toBase64();
 
@@ -41,13 +38,13 @@ public class HexadecimalBufferTest {
 
     @Test
     public void testTranspose() throws Exception {
-        final HexadecimalBuffer buffer = new HexadecimalBuffer(new byte[]{
+        final ByteBuffer buffer = new ByteBuffer(new byte[]{
                 0x00, 0x01,
                 0x02, 0x03,
                 0x04, 0x05
         });
 
-        final HexadecimalBuffer transposedBuffer = buffer.transpose(3);
+        final ByteBuffer transposedBuffer = buffer.transpose(3);
 
         assertEquals(buffer.bytes[0], transposedBuffer.bytes[0]);
         assertEquals(buffer.bytes[3], transposedBuffer.bytes[1]);

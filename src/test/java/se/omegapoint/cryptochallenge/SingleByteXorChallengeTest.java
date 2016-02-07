@@ -4,13 +4,14 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
+import se.omegapoint.cryptochallenge.utils.ByteBuffer;
 import se.omegapoint.cryptochallenge.utils.HexadecimalBuffer;
 import se.omegapoint.cryptochallenge.utils.StringBuffer;
 
 import java.util.Arrays;
 import java.util.Collection;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 @RunWith(Parameterized.class)
 public class SingleByteXorChallengeTest {
@@ -23,8 +24,8 @@ public class SingleByteXorChallengeTest {
         });
     }
 
-    private final HexadecimalBuffer cipherText;
-    private final HexadecimalBuffer plainText;
+    private final ByteBuffer cipherText;
+    private final ByteBuffer plainText;
 
     public SingleByteXorChallengeTest(final String cipherText, final String plainText) {
         this.cipherText = new HexadecimalBuffer(cipherText);

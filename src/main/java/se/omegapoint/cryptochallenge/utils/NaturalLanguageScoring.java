@@ -13,7 +13,7 @@ public class NaturalLanguageScoring {
             6.327, 9.056, 2.758, 0.978, 2.360, 0.150, 1.974, 0.074
     };
 
-    public static double of(final HexadecimalBuffer buffer) {
+    public static double of(final ByteBuffer buffer) {
         return IntStream.range(0, buffer.bytes.length).boxed()
                 .mapToDouble(i -> toScore(buffer.bytes[i]))
                 .sum();

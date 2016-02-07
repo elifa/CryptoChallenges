@@ -1,16 +1,16 @@
 package se.omegapoint.cryptochallenge;
 
-import se.omegapoint.cryptochallenge.utils.HexadecimalBuffer;
+import se.omegapoint.cryptochallenge.utils.ByteBuffer;
 
 public class WarmupChallenge {
 
-    private final HexadecimalBuffer keyBuffer;
+    private final ByteBuffer keyBuffer;
 
-    public WarmupChallenge(HexadecimalBuffer keyBuffer) {
+    public WarmupChallenge(ByteBuffer keyBuffer) {
         this.keyBuffer = keyBuffer;
     }
 
-    public HexadecimalBuffer encrypt(final HexadecimalBuffer plantextBuffer) {
+    public ByteBuffer encrypt(final ByteBuffer plantextBuffer) {
         return plantextBuffer.xor(keyBuffer);
     }
 

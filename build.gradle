@@ -17,6 +17,7 @@ dependencies {
     compile "io.vertx:vertx-core:3.2.0"
     compile "com.google.guava:guava:19.0"
     compile "org.apache.shiro:shiro-core:1.2.4"
+    testCompile "junit:junit:4.12"
 }
 
 mainClassName = "se.omegapoint.cryptochallenge.HelloWorldEmbedded"

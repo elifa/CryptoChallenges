@@ -3,13 +3,13 @@ package se.omegapoint.cryptochallenge.utils;
 public class HammingDistance {
 
     public static class OngoingHammingDistanceCalculation {
-        protected final HexadecimalBuffer baseBuffer;
+        protected final ByteBuffer baseBuffer;
 
-        public OngoingHammingDistanceCalculation(final HexadecimalBuffer baseBuffer) {
+        public OngoingHammingDistanceCalculation(final ByteBuffer baseBuffer) {
             this.baseBuffer = baseBuffer;
         }
 
-        public double and(final HexadecimalBuffer compareBuffer) {
+        public double and(final ByteBuffer compareBuffer) {
             final int minLength = Math.min(baseBuffer.length(), compareBuffer.length());
             final int maxLength = Math.max(baseBuffer.length(), compareBuffer.length());
 
@@ -27,24 +27,24 @@ public class HammingDistance {
 
     public static class OngoingNormalizedHammingDistanceCalculation extends OngoingHammingDistanceCalculation {
 
-        public OngoingNormalizedHammingDistanceCalculation(final HexadecimalBuffer baseBuffer) {
+        public OngoingNormalizedHammingDistanceCalculation(final ByteBuffer baseBuffer) {
             super(baseBuffer);
         }
 
         @Override
-        public double and(final HexadecimalBuffer compareBuffer) {
+        public double and(final ByteBuffer compareBuffer) {
             final double distance = super.and(compareBuffer);
             final int maxLength = Math.max(baseBuffer.length(), compareBuffer.length());
-            
+
             return distance / (double) maxLength;
         }
     }
 
-    public static OngoingHammingDistanceCalculation between(final HexadecimalBuffer buffer) {
+    public static OngoingHammingDistanceCalculation between(final ByteBuffer buffer) {
         return new OngoingHammingDistanceCalculation(buffer);
     }
 
-    public static OngoingNormalizedHammingDistanceCalculation normalizedBetween(final HexadecimalBuffer buffer) {
+    public static OngoingNormalizedHammingDistanceCalculation normalizedBetween(final ByteBuffer buffer) {
         return new OngoingNormalizedHammingDistanceCalculation(buffer);
     }
 }
