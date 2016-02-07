@@ -34,7 +34,6 @@ public class SingleByteXorChallengeTest {
 
     @Test
     public void testDecrypt() throws Exception {
-        System.out.println(new SingleByteXorChallenge().decrypt(cipherText));
         assertEquals(plainText, new SingleByteXorChallenge().decrypt(cipherText));
     }
 }

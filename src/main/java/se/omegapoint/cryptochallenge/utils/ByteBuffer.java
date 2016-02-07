@@ -131,7 +131,6 @@ public class ByteBuffer {
         if (otherObject == null || !otherObject.getClass().isAssignableFrom(getClass())) {
             return false;
         }
-
         final ByteBuffer that = (ByteBuffer) otherObject;
         return Arrays.equals(bytes, that.bytes);
 

@@ -47,10 +47,10 @@ public class AdvancedEncryptionStandard {
 
         for (int i = noOfChunks - 1; i >= 0; i--) {
             final ByteBuffer decryptedChunk = decrypt(currentChunk);
-            final ByteBuffer previousChunk = i == 0 ? initializationVector : cipherText.chunk(i, blockLength());
+            final ByteBuffer previousChunk = i == 0 ? initializationVector : cipherText.chunk(i - 1, blockLength());
             final ByteBuffer plainTextChunk = decryptedChunk.xor(previousChunk);
 
-            result = result.concat(plainTextChunk);
+            result = plainTextChunk.concat(result);
 
             currentChunk = previousChunk;
         }
@@ -66,8 +66,8 @@ public class AdvancedEncryptionStandard {
         return plainText.pad(paddedLength, new ByteBuffer(paddingLength));
     }
 
-    public ByteBuffer pkcs7unpad(final ByteBuffer plainText) {
-        final byte paddingLength = plainText.bytes[plainText.length() - 2];
+    private ByteBuffer pkcs7unpad(final ByteBuffer plainText) {
+        final byte paddingLength = plainText.bytes[plainText.length() - 1];
         
         if ((plainText.length() - paddingLength) < 0) {
             return plainText;

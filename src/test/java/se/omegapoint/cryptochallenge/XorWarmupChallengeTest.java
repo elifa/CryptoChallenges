@@ -12,7 +12,7 @@ import java.util.Collection;
 import static junit.framework.TestCase.assertEquals;
 
 @RunWith(Parameterized.class)
-public class WarmupChallengeTest {
+public class XorWarmupChallengeTest {
 
     @Parameters
     public static Collection<Object[]> data() {
@@ -28,7 +28,7 @@ public class WarmupChallengeTest {
     private final HexadecimalBuffer plainText;
     private final HexadecimalBuffer cipherText;
 
-    public WarmupChallengeTest(final String keyString, final String plainText, final String cipherText) {
+    public XorWarmupChallengeTest(final String keyString, final String plainText, final String cipherText) {
         this.keyString = new HexadecimalBuffer(keyString);
         this.plainText = new HexadecimalBuffer(plainText);
         this.cipherText = new HexadecimalBuffer(cipherText);
@@ -36,6 +36,6 @@ public class WarmupChallengeTest {
 
     @Test
     public void verifyXorEncryption() throws Exception {
-        assertEquals(cipherText, new WarmupChallenge(keyString).encrypt(plainText));
+        assertEquals(cipherText, new XorWarmupChallenge(keyString).encrypt(plainText));
     }
 }

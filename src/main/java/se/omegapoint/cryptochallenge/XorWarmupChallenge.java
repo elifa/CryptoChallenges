@@ -2,11 +2,11 @@ package se.omegapoint.cryptochallenge;
 
 import se.omegapoint.cryptochallenge.utils.ByteBuffer;
 
-public class WarmupChallenge {
+public class XorWarmupChallenge {
 
     private final ByteBuffer keyBuffer;
 
-    public WarmupChallenge(ByteBuffer keyBuffer) {
+    public XorWarmupChallenge(ByteBuffer keyBuffer) {
         this.keyBuffer = keyBuffer;
     }
 
