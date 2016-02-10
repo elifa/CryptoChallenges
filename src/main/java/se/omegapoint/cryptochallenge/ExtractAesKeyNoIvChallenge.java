@@ -7,12 +7,10 @@ import java.util.Arrays;
 
 public class ExtractAesKeyNoIvChallenge {
 
-    private final AdvancedEncryptionStandard aes;
-    private final ByteBuffer iv;
+    private final AdvancedEncryptionStandard.NoIv aes;
 
-    public ExtractAesKeyNoIvChallenge(final AdvancedEncryptionStandard aes, final ByteBuffer iv) {
+    public ExtractAesKeyNoIvChallenge(final AdvancedEncryptionStandard.NoIv aes) {
         this.aes = aes;
-        this.iv = iv;
     }
 
     public ByteBuffer extractKeyFromCipherText(final ByteBuffer cipherText) {
@@ -23,7 +21,7 @@ public class ExtractAesKeyNoIvChallenge {
             attackBuffer = attackBuffer.concat(cipherText.chunk(i, aes.blockLength()));
         }
 
-        final ByteBuffer decryptedBuffer = aes.decrypt(attackBuffer, iv);
+        final ByteBuffer decryptedBuffer = aes.decrypt(attackBuffer);
 
         //P'_1 = decrypt(K, C_1) xor K = P_1
         //P'_2 = decrypt(K, C_2) xor C_1 = (some unimportant junk)

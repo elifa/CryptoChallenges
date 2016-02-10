@@ -24,7 +24,7 @@ public class RepeatingKeyXorChallengeTest {
     static {
         try {
             ENC_TXT_FILE = Resources.toString(Resources.getResource("repeatingKeyXor.txt"), Charsets.UTF_8);
-            PLAIN_TXT_FILE = Resources.toString(Resources.getResource("repeatingKeyXorPlain.txt"), Charsets.ISO_8859_1);
+            PLAIN_TXT_FILE = Resources.toString(Resources.getResource("repeatingKeyXorPlain.txt"), Charsets.UTF_8);
         } catch (IOException e) {
             e.printStackTrace();
         }

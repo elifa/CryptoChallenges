@@ -91,5 +91,28 @@ public class AdvancedEncryptionStandard {
 
         return new ByteBuffer(plainText.getBytes());
     }
+    
+    public static class NoIv {
+
+        private final ByteBuffer iv;
+        private final AdvancedEncryptionStandard aes;
+
+        public NoIv(final ByteBuffer encryptionKey) {
+            this.iv = encryptionKey;
+            this.aes = new AdvancedEncryptionStandard(encryptionKey);
+        }
+        
+        public int blockLength() {
+            return aes.blockLength();
+        }
+
+        public ByteBuffer decrypt(final ByteBuffer cipherText) {
+            return aes.decrypt(cipherText, iv);
+        }
+
+        public ByteBuffer encrypt(final ByteBuffer plainText) {
+            return aes.encrypt(plainText, iv);
+        }
+    }
 
 }

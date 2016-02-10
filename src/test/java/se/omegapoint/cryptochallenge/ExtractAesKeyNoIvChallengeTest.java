@@ -37,10 +37,10 @@ public class ExtractAesKeyNoIvChallengeTest {
 
     @Test
     public void shouldBeAbleToDetermineKeyFromCipherText() throws Exception {
-        final AdvancedEncryptionStandard aes = new AdvancedEncryptionStandard(bothIvAndKey);
-        final ExtractAesKeyNoIvChallenge challenge = new ExtractAesKeyNoIvChallenge(aes, bothIvAndKey);
+        final AdvancedEncryptionStandard.NoIv aes = new AdvancedEncryptionStandard.NoIv(bothIvAndKey);
+        final ExtractAesKeyNoIvChallenge challenge = new ExtractAesKeyNoIvChallenge(aes);
 
-        final ByteBuffer cipherText = aes.encrypt(plainText, bothIvAndKey);
+        final ByteBuffer cipherText = aes.encrypt(plainText);
 
         assertEquals(bothIvAndKey, challenge.extractKeyFromCipherText(cipherText));
     }
