@@ -18,12 +18,16 @@ public class ByteBuffer {
         this.bytes = new byte[]{};
     }
 
-    public ByteBuffer(final int singleByte) {
-        this((byte) singleByte);
+    public ByteBuffer(final int singleInt) {
+        this((byte) singleInt);
     }
 
     public ByteBuffer(final byte singleByte) {
         this.bytes = new byte[]{singleByte};
+    }
+
+    public ByteBuffer(final int[] intArray) {
+        this.bytes = toByteArray(intArray);
     }
 
     public ByteBuffer(final byte[] byteArray) {
@@ -93,6 +97,14 @@ public class ByteBuffer {
         return new ByteBuffer(mergedBytes);
     }
 
+    public ByteBuffer subBuffer(final int start) {
+        return subBuffer(start, length() - start);
+    }
+
+    public ByteBuffer subBuffer(final int start, final int length) {
+        return new ByteBuffer(Arrays.copyOfRange(bytes, start, start + length));
+    }
+
     public int length() {
         return bytes.length;
     }
@@ -119,8 +131,37 @@ public class ByteBuffer {
         return new BigInteger(rev);
     }
 
+    public int[] toInts() {
+        final int length = length() / 4 + (length() % 4 == 0 ? 0 : 1);
+        final int[] result = new int[length];
+
+        for (int i = 0, j = 0; i < length(); i++, j = i / 4) {
+            result[j] = result[j] << 8;
+            result[j] += bytes[i] & 0xff;
+        }
+
+        return result;
+    }
+
     private int calculateChunkLength(final int numberOfChunks) {
         return length() / numberOfChunks + (length() % numberOfChunks == 0 ? 0 : 1);
+    }
+
+    private byte[] toByteArray(final int[] wordBuffer) {
+        final byte[] result = new byte[wordBuffer.length * 4];
+
+        for (int i = 0; i < wordBuffer.length; i++) {
+            int word = wordBuffer[i];
+            final byte[] bytes = new byte[4];
+
+            for (int j = 0; word != 0; j++, word >>>= 8) {
+                bytes[4 - j - 1] = (byte) (word & 0xFF);
+            }
+
+            System.arraycopy(bytes, 0, result, i * 4, 4);
+        }
+
+        return result;
     }
 
     @Override
