@@ -1,12 +1,10 @@
 package se.omegapoint.cryptochallenge;
 
-import org.junit.Before;
 import org.junit.Test;
-import se.omegapoint.cryptochallenge.DiffieHellmanWarmupChallenge.MasterClient;
-import se.omegapoint.cryptochallenge.DiffieHellmanWarmupChallenge.SlaveClient;
-import se.omegapoint.cryptochallenge.utils.ByteBuffer;
-import se.omegapoint.cryptochallenge.utils.HexadecimalBuffer;
+import se.omegapoint.cryptochallenge.utils.*;
 import se.omegapoint.cryptochallenge.utils.StringBuffer;
+
+import java.math.BigInteger;
 
 import static junit.framework.TestCase.assertEquals;
 
@@ -23,32 +21,17 @@ public class DiffieHellmanWarmupChallengeTest {
                     "bb9ed529077096966d670c354e4abc9804f1746c08ca237327fff" +
                     "fffffffffffff");
 
-    private SlaveClient slaveClient;
-    private MasterClient masterClient;
-
-    @Before
-    public void before() {
-        final DiffieHellmanWarmupChallenge challenge = new DiffieHellmanWarmupChallenge();
-
-        slaveClient = challenge.createSlave();
-        masterClient = challenge.createMaster(P, G);
-    }
-
     @Test
-    public void sessionKeysShouldBeEqual() throws Exception {
-        masterClient.connectTo(slaveClient);
+    public void shouldBeAbleToAgreeOnTheCorrectKey() throws Exception {
+        final DiffieHellman diffieHellman = new DiffieHellman(P, G);
+        final DiffieHellmanWarmupChallenge challenge = new DiffieHellmanWarmupChallenge(P, G);
 
-        assertEquals(masterClient.sessionSecret(), slaveClient.sessionSecret());
+        final BigInteger clientKey = challenge.handshake(diffieHellman.pub);
+        final AdvancedEncryptionStandard sessionEncryption = new AdvancedEncryptionStandard(diffieHellman.handshake(clientKey));
+        final RandomBuffer initializationVector = new RandomBuffer(sessionEncryption.blockLength());
+        final StringBuffer plainText = new StringBuffer("My test message!");
+
+        assertEquals(plainText, challenge.message(sessionEncryption.encrypt(plainText, initializationVector), initializationVector));
     }
 
-    @Test
-    public void messageShouldBeTheLastForBothClient() throws Exception {
-        final ByteBuffer message = new StringBuffer("Test message: Hey yo!!");
-
-        masterClient.connectTo(slaveClient);
-        masterClient.sendMessage(slaveClient, message);
-
-        assertEquals(message, masterClient.lastMessage());
-        assertEquals(message, slaveClient.lastMessage());
-    }
 }
